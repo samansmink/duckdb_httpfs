@@ -60,39 +60,12 @@ release:
 	cmake $(GENERATOR) $(BUILD_FLAGS)  $(CLIENT_FLAGS)  -DCMAKE_BUILD_TYPE=Release -S ./duckdb/ -B build/release && \
 	cmake --build build/release --config Release
 
-##### Client build
-JS_BUILD_FLAGS=-DBUILD_NODE=1 -DDUCKDB_EXTENSION_${EXTENSION_NAME}_SHOULD_LINK=0
-PY_BUILD_FLAGS=-DBUILD_PYTHON=1 -DDUCKDB_EXTENSION_${EXTENSION_NAME}_SHOULD_LINK=0
-
-debug_js: CLIENT_FLAGS=$(JS_BUILD_FLAGS)
-debug_js: debug
-debug_python: CLIENT_FLAGS=$(PY_BUILD_FLAGS)
-debug_python: debug
-release_js: CLIENT_FLAGS=$(JS_BUILD_FLAGS)
-release_js: release
-release_python: CLIENT_FLAGS=$(PY_BUILD_FLAGS)
-release_python: release
-
 # Main tests
 test: test_release
 test_release: release
 	./build/release/$(TEST_PATH) "$(PROJ_DIR)test/*"
 test_debug: debug
 	./build/debug/$(TEST_PATH) "$(PROJ_DIR)test/*"
-
-#### Client tests
-DEBUG_EXT_PATH='$(PROJ_DIR)build/debug/extension/httpfs/httpfs.duckdb_extension'
-RELEASE_EXT_PATH='$(PROJ_DIR)build/release/extension/httpfs/httpfs.duckdb_extension'
-test_js: test_debug_js
-test_debug_js: debug_js
-	cd duckdb/tools/nodejs && ${EXTENSION_NAME}_EXTENSION_BINARY_PATH=$(DEBUG_EXT_PATH) npm run test-path -- "../../../test/nodejs/**/*.js"
-test_release_js: release_js
-	cd duckdb/tools/nodejs && ${EXTENSION_NAME}_EXTENSION_BINARY_PATH=$(RELEASE_EXT_PATH) npm run test-path -- "../../../test/nodejs/**/*.js"
-test_python: test_debug_python
-test_debug_python: debug_python
-	cd test/python && ${EXTENSION_NAME}_EXTENSION_BINARY_PATH=$(DEBUG_EXT_PATH) python3 -m pytest
-test_release_python: release_python
-	cd test/python && ${EXTENSION_NAME}_EXTENSION_BINARY_PATH=$(RELEASE_EXT_PATH) python3 -m pytest
 
 #### Misc
 format:
