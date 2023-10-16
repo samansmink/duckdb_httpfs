@@ -1,6 +1,6 @@
 name: Minio Testing
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       # DuckDB version to build against
       duckdb_version:
