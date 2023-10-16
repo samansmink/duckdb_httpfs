@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-20.04
     needs: linux-release-64
     env:
-      DUCKDB_EXTENSION_CONFIGS: ${{GITHUB_WORKSPACE}}/.github/config/test_extensions.cmake
+      DUCKDB_EXTENSION_CONFIGS: '${GITHUB_WORKSPACE}/.github/config/test_extensions.cmake'
       S3_TEST_SERVER_AVAILABLE: 1
       AWS_DEFAULT_REGION: eu-west-1
       AWS_ACCESS_KEY_ID: minio_duckdb_user
