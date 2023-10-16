@@ -12,12 +12,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  minio-testing:
+    name: Run tests with Minio
+    uses: ./.github/workflows/_minio_testing.yml
+    with:
+      duckdb_version: v0.9.1
+
   duckdb-stable-build:
     name: Build extension binaries
+    needs: minio-testing
     uses: duckdb/duckdb/.github/workflows/_extension_distribution.yml@v0.9.1
     with:
       duckdb_version: v0.9.1
-      extension_name: httpfs
+      extension_name: 'httpfs;json;parquet'
 
   duckdb-stable-deploy:
     name: Deploy extension binaries
