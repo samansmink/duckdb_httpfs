@@ -1,1 +1,2 @@
-Documentation on S3 tests setup can be found [here](../../test/sql/copy/s3/README.md)
+# HTTPFS extension for DuckDB 
+WIP: This extension is being moved from duckdb/duckdb to this repo
