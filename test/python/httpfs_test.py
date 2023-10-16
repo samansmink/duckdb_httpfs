@@ -2,7 +2,7 @@ import duckdb
 import os
 import pytest
 
-# Get a fresh connection to DuckDB with the quack extension binary loaded
+# Get a fresh connection to DuckDB with the httpfs extension binary loaded
 @pytest.fixture
 def duckdb_conn():
     extension_binary = os.getenv('QUACK_EXTENSION_BINARY_PATH')
@@ -12,12 +12,12 @@ def duckdb_conn():
     conn.execute(f"load '{extension_binary}'")
     return conn
 
-def test_quack(duckdb_conn):
-    duckdb_conn.execute("SELECT quack('Sam') as value;");
+def test_httpfs(duckdb_conn):
+    duckdb_conn.execute("SELECT httpfs('Sam') as value;");
     res = duckdb_conn.fetchall()
-    assert(res[0][0] == "Quack Sam 🐥");
+    assert(res[0][0] == "Httpfs Sam 🐥");
 
-def test_quack_openssl_version_test(duckdb_conn):
-    duckdb_conn.execute("SELECT quack_openssl_version('Michael');");
+def test_httpfs_openssl_version_test(duckdb_conn):
+    duckdb_conn.execute("SELECT httpfs_openssl_version('Michael');");
     res = duckdb_conn.fetchall()
-    assert(res[0][0][0:51] == "Quack Michael, my linked OpenSSL version is OpenSSL");
+    assert(res[0][0][0:51] == "Httpfs Michael, my linked OpenSSL version is OpenSSL");
