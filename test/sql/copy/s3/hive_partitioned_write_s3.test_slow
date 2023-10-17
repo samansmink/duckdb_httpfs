@@ -51,7 +51,7 @@ loop i 1 9
 query I
 PRAGMA tpch(${i})
 ----
-<FILE>:extension/tpch/dbgen/answers/sf1/q0${i}.csv
+<FILE>:data/tpc_answers/tpch/sf1/q0${i}.csv
 
 endloop
 
@@ -60,6 +60,6 @@ loop i 10 23
 query I
 PRAGMA tpch(${i})
 ----
-<FILE>:extension/tpch/dbgen/answers/sf1/q${i}.csv
+<FILE>:data/tpc_answers/tpch/sf1/q${i}.csv
 
 endloop
