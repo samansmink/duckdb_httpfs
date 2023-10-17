@@ -7,7 +7,7 @@ on:
         required: true
         type: string
       vcpkg_commit:
-        required: true
+        required: false
         type: string
         default: 501db0f17ef6df184fcdbfbe0f87cde2313b6ab1
 
