@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(HTTPFsExtension)
 
-include_directories(include duckdb/third_party/httplib duckdb/extension/parquet/include)
+include_directories(src/include duckdb/third_party/httplib duckdb/extension/parquet/include)
 
 set(HTTPFS_SOURCES src/s3fs.cpp src/httpfs.cpp src/crypto.cpp src/httpfs_extension.cpp)
 build_static_extension(httpfs ${HTTPFS_SOURCES})

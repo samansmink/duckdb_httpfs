@@ -12,6 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # TODO: move to a test build that can reuse the artifacts from the duckdb _extension_distribution workflow
   minio-testing:
     name: Run tests with Minio
     uses: ./.github/workflows/_minio_testing.yml
@@ -24,7 +25,7 @@ jobs:
     uses: duckdb/duckdb/.github/workflows/_extension_distribution.yml@v0.9.1
     with:
       duckdb_version: v0.9.1
-      extension_name: 'httpfs;json;parquet'
+      extension_name: 'httpfs'
 
   duckdb-stable-deploy:
     name: Deploy extension binaries
