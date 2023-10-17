@@ -6,6 +6,10 @@ on:
       duckdb_version:
         required: true
         type: string
+      vcpkg_commit:
+        required: true
+        type: string
+        default: 501db0f17ef6df184fcdbfbe0f87cde2313b6ab1
 
 jobs:
   linux-httpfs:
@@ -13,7 +17,9 @@ jobs:
     if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-20.04
     env:
-      DUCKDB_EXTENSION_CONFIGS: '${GITHUB_WORKSPACE}/.github/config/test_extensions.cmake'
+      VCPKG_TARGET_TRIPLET: linux_amd64
+      VCPKG_TOOLCHAIN_PATH: ${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
+      DUCKDB_EXTENSION_CONFIGS: ${{ github.workspace }}/.github/config/test_extensions.cmake
       S3_TEST_SERVER_AVAILABLE: 1
       AWS_DEFAULT_REGION: eu-west-1
       AWS_ACCESS_KEY_ID: minio_duckdb_user
@@ -46,6 +52,11 @@ jobs:
         with:
           key: ${{ github.job }}
 
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: ${{ inputs.vcpkg_commit }}
+
       - name: Build
         shell: bash
         run: make
@@ -53,9 +64,9 @@ jobs:
       - name: Start S3/HTTP test server
         shell: bash
         run: |
-          sudo ./duckdb/scripts/install_s3_test_server.sh
-          ./duckdb/scripts/generate_presigned_url.sh
-          source ./duckdb/scripts/run_s3_test_server.sh
+          sudo ./scripts/install_s3_test_server.sh
+          ./scripts/generate_presigned_url.sh
+          source ./scripts/run_s3_test_server.sh
           sleep 60
 
       - name: Test
