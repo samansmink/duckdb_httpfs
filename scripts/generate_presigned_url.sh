@@ -15,4 +15,4 @@ build/release/duckdb -c "$generate_large_parquet_query"
 mkdir -p data/attach_test/
 
 # Generate Storage Version
-build/release/duckdb  data/attach_test/attach.db < test/sql/storage_version/generate_storage_version.sql
+build/release/duckdb  data/attach_test/attach.db < duckdb/test/sql/storage_version/generate_storage_version.sql
