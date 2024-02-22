@@ -25,12 +25,12 @@ jobs:
     uses: duckdb/duckdb/.github/workflows/_extension_distribution.yml@v0.10.0
     with:
       duckdb_version: v0.10.0
-      extension_name: 'httpfs'
+      extension_name: httpfs
 
   duckdb-stable-deploy:
     name: Deploy extension binaries
     needs: duckdb-stable-build
-    uses: duckdb/duckdb/.github/workflows/_extension_deploy.ymlv0.10.0
+    uses: duckdb/duckdb/.github/workflows/_extension_deploy.yml@v0.10.0
     secrets: inherit
     with:
       duckdb_version: v0.10.0
