@@ -4,9 +4,13 @@ project(HTTPFsExtension)
 
 include_directories(src/include duckdb/third_party/httplib duckdb/extension/parquet/include)
 
-set(HTTPFS_SOURCES src/s3fs.cpp src/httpfs.cpp src/crypto.cpp src/httpfs_extension.cpp)
+set(HTTPFS_SOURCES src/s3fs.cpp src/httpfs.cpp src/crypto.cpp src/httpfs_extension.cpp src/create_secret_functions.cpp)
 build_static_extension(httpfs ${HTTPFS_SOURCES})
 build_loadable_extension(httpfs ${HTTPFS_SOURCES})
+
+if(MINGW)
+  set(OPENSSL_USE_STATIC_LIBS TRUE)
+endif()
 
 find_package(OpenSSL REQUIRED)
 

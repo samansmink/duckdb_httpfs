@@ -17,23 +17,23 @@ jobs:
     name: Run tests with Minio
     uses: ./.github/workflows/_minio_testing.yml
     with:
-      duckdb_version: v0.9.1
+      duckdb_version: v0.10.0
 
   duckdb-stable-build:
     name: Build extension binaries
     needs: minio-testing
-    uses: duckdb/duckdb/.github/workflows/_extension_distribution.yml@v0.9.1
+    uses: duckdb/duckdb/.github/workflows/_extension_distribution.yml@v0.10.0
     with:
-      duckdb_version: v0.9.1
+      duckdb_version: v0.10.0
       extension_name: 'httpfs'
 
   duckdb-stable-deploy:
     name: Deploy extension binaries
     needs: duckdb-stable-build
-    uses: ./.github/workflows/_extension_deploy.yml
+    uses: duckdb/duckdb/.github/workflows/_extension_deploy.ymlv0.10.0
     secrets: inherit
     with:
-      duckdb_version: v0.9.1
+      duckdb_version: v0.10.0
       extension_name: httpfs
       deploy_latest: ${{ startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main' }}
       deploy_versioned: ${{ startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main' }}
