@@ -21,11 +21,12 @@ jobs:
 
   duckdb-stable-build:
     name: Build extension binaries
-    needs: minio-testing
+#    needs: minio-testing
     uses: duckdb/duckdb/.github/workflows/_extension_distribution.yml@v0.10.0
     with:
       duckdb_version: v0.10.0
       extension_name: httpfs
+      exclude_archs: 'wasm_mvp;wasm_eh;wasm_threads'
 
   duckdb-stable-deploy:
     name: Deploy extension binaries
@@ -35,5 +36,6 @@ jobs:
     with:
       duckdb_version: v0.10.0
       extension_name: httpfs
+      exclude_archs: 'wasm_mvp;wasm_eh;wasm_threads'
       deploy_latest: ${{ startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main' }}
       deploy_versioned: ${{ startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main' }}
